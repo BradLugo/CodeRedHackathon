@@ -1,4 +1,4 @@
-<section data-ng-controller="MapController">
+<section ng-controller="MapController">
     <div style=" width:20%; height:3px; margin:0px 40% 5px 40%"></div>
     <div style=" margin:20px 5%; min-height:300px; padding:0 2%" class="container jumbotron">
         <div style="margin:30px 43% 30px 44%">
@@ -52,7 +52,7 @@
         <input id="address" type="text" value="Houston, TX">
         <input type="button" value="Geocode" onclick="codeAddress()">
     </div>
-    <div id="map-canvas"></div>
+    <ui-gmap-google-map center='map.center' zoom='map.zoom'></ui-gmap-google-map>
     <script type='text/javascript' src='http://maps.googleapis.com/maps/api/js'></script>
     <script type='text/javascript'>
         $(function() {

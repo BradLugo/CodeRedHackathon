@@ -1,3 +1,3 @@
-angular.module('core').controller('HomeController', function($scope) {
+myApp.controller('HomeController', function($scope) {
 
 });

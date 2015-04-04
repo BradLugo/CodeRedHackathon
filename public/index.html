@@ -1,45 +1,42 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" ng-app="Vincent">
 <head>
 	<meta charset="UTF-8">
 	<base href="/">
 
 	<title>Starter Node and Angular</title>
 
-	<!-- CSS -->
 	<link rel="stylesheet" href="libs/bootstrap/dist/css/bootstrap.min.css">
-	<link rel="stylesheet" href="css/style.css"> <!-- custom styles -->
-
-	<!-- JS -->
+	<link rel="stylesheet" href="css/bootstrap.css">
+	<style media="screen">
+	.angular-google-map-container { height: 400px; }
+	</style>
 	<script src="libs/angular/angular.min.js"></script>
 	<script src="libs/angular-route/angular-route.min.js"></script>
-
-	<!-- ANGULAR CUSTOM -->
-	<script src="js/controllers/MainCtrl.js"></script>
-	<script src="js/controllers/NerdCtrl.js"></script>
-	<script src="js/services/NerdService.js"></script>
-	<script src="js/controllers/GeekCtrl.js"></script>
-	<script src="js/services/GeekService.js"></script>
+	<script src="//maps.googleapis.com/maps/api/js?sensor=false"></script>
+	<script src="libs/lodash/dist/lodash.min.js"></script>
+	<script src="libs/angular-google-maps/dist/angular-google-maps.min.js"></script>
 	<script src="js/appRoutes.js"></script>
 	<script src="js/app.js"></script>
+
 </head>
-<body ng-app="Vincent" ng-controller="NerdController">
-<div class="container">
+<body style="font-family: Arial; font-size:16px; font-weight:600; background-image:url(/img/brand/houston.jpg); background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center; background-size:100%;">
+	<section class="content" ng-controller="HomeController">
 
-	<!-- HEADER -->
-	<nav class="navbar navbar-inverse">
-		<div class="navbar-header">
-			<a class="navbar-brand" href="/">Stencil: Node and Angular</a>
-		</div>
-		<ul class="nav navbar-nav">
-			<li><a href="/nerds">Nerds</a></li>
-			<li><a href="/geeks">Geeks</a></li>
-		</ul>
-	</nav>
+		<ui-gmap-google-map center='map.center' zoom='map.zoom'></ui-gmap-google-map>
+	</section>
 
-	<!-- ANGULAR DYNAMIC CONTENT -->
-	<div ng-view></div>
 
-</div>
+	<!--Livereload script rendered -->
+	<!--[if lt IE 9]>
+	<section class="browsehappy jumbotron hide">
+		<h1>Hello there!</h1>
+		<p>You are using an old browser which we unfortunately do not support.</p>
+		<p>Please <a href="http://browsehappy.com/">click here</a> to update your browser before using the website.</p>
+		<p><a href="http://browsehappy.com" class="btn btn-primary btn-lg" role="button">Yes, upgrade my browser!</a></p>
+	</section>
+	<![endif]-->
 </body>
 </html>

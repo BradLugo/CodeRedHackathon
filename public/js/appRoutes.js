@@ -1,16 +1,12 @@
-angular.module('appRoutes', []).config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
+angular.module('Vincent', []).config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
 
-	$routeProvider
-
-		// home page
-		.when('/', {
-			templateUrl: 'views/home.html',
-			controller: 'MainController'
-		})
-
-		.when('/map', {
+	$routeProvider.when('/', {
 			templateUrl: 'views/map.html',
-			controller: 'MapController'
+			controller: function($scope, Authentication) {
+				$scope.tagline = 'To the moon and back!';
+			    console.log('im in the map controller');
+				$scope.map = { center: { latitude: 45, longitude: -73 }, zoom: 8 };
+			}
 		})
 
 		.when('/advancedSearch', {

@@ -1,1 +1,3 @@
-angular.module('crime').controller('AdvancedSearchController');
+myApp.controller('AdvancedSearchController', function($scope) {
+
+});

@@ -1,3 +1,3 @@
-angular.module('crime').controller('MessageBoardController', function($scope, Authentication) {
+myApp.controller('MessageBoardController', function($scope, Authentication) {
 
 });
