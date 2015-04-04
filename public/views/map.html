@@ -1,0 +1,110 @@
+<section data-ng-controller="MapController">
+    <div style=" width:20%; height:3px; margin:0px 40% 5px 40%"></div>
+    <div style=" margin:20px 5%; min-height:300px; padding:0 2%" class="container jumbotron">
+        <div style="margin:30px 43% 30px 44%">
+            <a href="#!advancedsearch" class=" btn btn-info">Go To Advanced Search</a>
+        </div>
+        <div class="panel panel-danger" style="width:47%; text-align:center; font-size:20px; margin:50px 0 ; display:inline-block; vertical-align:top">
+            <div class="panel-heading">
+                <h3 class="panel-title">Crime Map</h3>
+            </div>
+            <div class="panel-body">
+                <div style="overflow:hidden;height:100%;width:100%; display:inline-block;">
+                    <div id='gmap_canvas' style='height:400px;width:520px;'></div>
+                    <style>
+                        #gmap_canvas img {
+                            max-width: none !important;
+                            background: none !important;
+                        }
+                    </style>
+                </div>
+            </div>
+        </div>
+        <div style="display:inline-block; width:5%; height:550px; ">
+            <div style="background-color:black; width:3px; height:550px; margin:0 45%"></div>
+        </div>
+        <div class="panel panel-danger" style="width:47%; text-align:center; vertical-align:top; font-size:20px; margin:50px 0; display:inline-block; min-height:350px">
+            <div class="panel-heading">
+                <h3 class="panel-title">Information/Alerts</h3>
+            </div>
+            <div class="panel-body">
+                <table style="font-size:15px; width:100%">
+                    <colgroup>
+                        <col style="width:35%" />
+                        <col style="width:20%" />
+                        <col style="width:25%" />
+                        <col />
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <td>Location</td>
+                            <td>Time</td>
+                            <td>Offense Type</td>
+                            <td>Premise</td>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+
+    </div>
+    <div id="panel">
+        <input id="address" type="text" value="Houston, TX">
+        <input type="button" value="Geocode" onclick="codeAddress()">
+    </div>
+    <div id="map-canvas"></div>
+    <script type='text/javascript' src='http://maps.googleapis.com/maps/api/js'></script>
+    <script type='text/javascript'>
+        $(function() {
+            var geocoder;
+            var map;
+
+            function initialize() {
+                geocoder = new google.maps.Geocoder();
+                var latlng = new google.maps.LatLng(29.834, -95.43420000000003);
+
+                var mapOptions = {
+                    zoom: 8,
+                    center: latlng
+                }
+
+                map = new google.maps.Map($('#map-canvas'), mapOptions);
+            }
+
+            function codeAddress() {
+                var address = $('#address').value;
+                geocoder.geocode({
+                    address: 'Houston, TX' + address
+                }, function(results, status) {
+                    if (status == google.maps.GeocoderStatus.OK) {
+                        map.setCenter(results[0].geometry.location);
+                        var marker = new google.maps.Marker({
+                            map: map,
+                            position: results[0].geometry.location
+                        });
+                    } else {
+                        alert('Geocode was not successful for the following reason: ' + status);
+                    }
+                });
+            }
+
+            google.maps.event.addDomListener(window, 'load', initialize);
+
+            function init_map() {
+                var myOptions = {
+                    zoom: 10,
+                    center: new google.maps.LatLng(29.834, -95.43420000000003),
+                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                };
+                map = new google.maps.Map($('#gmap_canvas'), myOptions);
+                //marker = new google.maps.Marker({ map: map, position: new google.maps.LatLng(29.834, -95.43420000000003) });
+                google.maps.event.addListener(marker, 'click', function() {
+                    infowindow.open(map, marker);
+                });
+                infowindow.open(map, marker);
+            }
+            google.maps.event.addDomListener(window, 'load', init_map);
+        });
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
+</section>

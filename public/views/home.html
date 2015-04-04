@@ -1,5 +1,31 @@
-<div class="jumbotron text-center">
-	<h1>Home Page 4 Life</h1>
+<head>
+    <style>
+        .trans{
+            background-color:rgba(44,44,44,0.4);
+            padding: 0px 20px;
+            border-radius: 4px;
+            border-color: rgba(44,44,44,1);
+            font-size:24px;
+            font-weight:normal
+        }
+        .trans:hover {
+            background-color:rgba(44,44,44,.7);
+        }
+    </style>
+</head>
+    <section data-ng-controller="HomeController">
+        <article>
+            <div style="" class="text-center">
+                <div style=" width:300px; margin-left:auto; margin-right:auto">
+                        <a style=" padding:5px 15px; color: #f39c12" href="#!advancedsearch" class="trans">Advanced Search</a>
+                </div>
+                <div style="margin-top:20px; width:500px;" class="center-block">
+                        <a style=" padding:5px 15px; color: #f39c12" href="#!map" class="trans">Map View</a>
+                </div>
 
-	<p>{{ tagline }}</p>
-</div>
+                <div style="margin-top:20px; width:300px; margin-left:auto; margin-right:auto">
+                    <a style=" padding:5px 15px; color: #f39c12" href="#!messageboard" class="trans">Message Board</a>
+                </div>
+            </div>
+        </article>
+</section>

@@ -1,0 +1,142 @@
+<section data-ng-controller="AdvancedSearchController">
+    <div style=" width:20%; height:3px; margin:0px 40% 5px 40%"></div>
+    <div style=" margin:20px 5%; min-height:450px; padding:7% 10% " class="container jumbotron">
+        <form action="" style="">
+            <table c>
+                <colgroup>
+                    <col style="width:130px"/>
+                    <col style="width:350px"/>
+                    <col style="width:100px"/>
+                    <col style="width:200px"/>
+                    <col style="width:80px" />
+                </colgroup>
+                <tr>
+                    <td>
+                        <span id="locationField" style="display:inline-block; width:120px; margin-bottom:20px;">
+                            <span class="">Location:</span>
+                        </span>
+                    </td>
+                    <td>
+                        <input id="autocomplete" type="text" name="Location" onfocus="geolocate()" style="margin-right:15px; width:300px; margin-bottom:20px;">
+                    </td>
+                    <td>
+                        <span style="display:inline-block; width:80px">
+                            <span class="">Time:</span>
+                        </span>
+                    </td>
+                    <td>
+                        <input type="text" name="Time" style="margin-right:15px; margin-bottom:20px; width:120px" placeholder="Enter Time">
+                        <br />
+                    </td>
+                    <td> <input type="submit" value="Search" class="btn btn-info" style=" margin-bottom:20px;"><br /></td>
+                </tr>
+                <tr>
+                    <td>
+                        <span style="display:inline-block; width:120px">Offense Type: </span>
+                    </td>
+                    <td>
+                        <input type="text" name="OffenseType" style="margin-right:15px; width:300px" placeholder="Enter Crime">
+                    </td>
+                    <td>
+                        <span style="display:inline-block; width:80px">Premise: </span>
+                    </td>
+                    <td>
+                        <input type="text" name="Premise" style="margin-right:15px; width:120px" placeholder="Enter Premise">
+                        <br />
+                    </td>
+                    <td>
+                            <a href="#!map" class=" btn btn-info">Go To Map View</a>
+                    </td>
+                </tr>
+            </table>
+        </form>
+        <table style=" margin:50px 0; width:100%; text-align:center" class="">
+            <colgroup>
+                <col style="width:35%" />
+                <col style="width:20%" />
+                <col style="width:25%" />
+                <col />
+            </colgroup>
+            <thead>
+                <tr class="customtable">
+                    <td>Location</td>
+                    <td>Time</td>
+                    <td>Offense Type</td>
+                    <td>Premise</td>
+                </tr>
+            </thead>
+        </table>
+
+    </div>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
+    <script>
+        // This example displays an address form, using the autocomplete feature
+        // of the Google Places API to help users fill in the information.
+        $(function() {
+            var placeSearch, autocomplete;
+            var componentForm = {
+                street_number: 'short_name',
+                route: 'long_name',
+                locality: 'long_name',
+                administrative_area_level_1: 'short_name',
+                country: 'long_name',
+                postal_code: 'short_name'
+            };
+
+            function initialize() {
+                // Create the autocomplete object, restricting the search
+                // to geographical location types.
+                autocomplete = new google.maps.places.Autocomplete(
+                    /** @type {HTMLInputElement} */
+                    (document.getElementById('autocomplete')), {
+                        types: ['geocode']
+                    });
+                // When the user selects an address from the dropdown,
+                // populate the address fields in the form.
+                google.maps.event.addListener(autocomplete, 'place_changed', function() {
+                    fillInAddress();
+                });
+            }
+
+            // [START region_fillform]
+            function fillInAddress() {
+                    // Get the place details from the autocomplete object.
+                    var place = autocomplete.getPlace();
+
+                    for (var component in componentForm) {
+                        document.getElementById(component).value = '';
+                        document.getElementById(component).disabled = false;
+                    }
+
+                    // Get each component of the address from the place details
+                    // and fill the corresponding field on the form.
+                    for (var i = 0; i < place.address_components.length; i++) {
+                        var addressType = place.address_components[i].types[0];
+                        if (componentForm[addressType]) {
+                            var val = place.address_components[i][componentForm[addressType]];
+                            document.getElementById(addressType).value = val;
+                        }
+                    }
+                }
+                // [END region_fillform]
+
+            // [START region_geolocation]
+            // Bias the autocomplete object to the user's geographical location,
+            // as supplied by the browser's 'navigator.geolocation' object.
+            function geolocate() {
+                    if (navigator.geolocation) {
+                        navigator.geolocation.getCurrentPosition(function(position) {
+                            var geolocation = new google.maps.LatLng(
+                                position.coords.latitude, position.coords.longitude);
+                            var circle = new google.maps.Circle({
+                                center: geolocation,
+                                radius: position.coords.accuracy
+                            });
+                            autocomplete.setBounds(circle.getBounds());
+                        });
+                    }
+                }
+                // [END region_geolocation]
+        });
+    </script>
+</section>
